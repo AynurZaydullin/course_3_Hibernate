@@ -20,6 +20,7 @@ public class Application {
         newEmployees.add(employee1);
         newEmployees.add(employee2);
         newEmployees.add(employee3);
+        //Добавляю город в базу данных
         cityDAO.add(city);
         //Вывожу информацию о городе в консоль
         city.toString();
