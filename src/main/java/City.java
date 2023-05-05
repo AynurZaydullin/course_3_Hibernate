@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "city")
 public class City {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "city_id")
     private int city_id;
     @Column(name = "city_name")
@@ -18,8 +19,7 @@ public class City {
     //FetchType.LAZY - можно не указывать. Этот тип стоит по умолчанию.
     private List<Employee> employees;
 
-    public City(int city_id, String cityName, List<Employee> employees) {
-        this.city_id = city_id;
+    public City( String cityName, List<Employee> employees) {
         this.cityName = cityName;
         this.employees = employees;
     }

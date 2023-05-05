@@ -7,7 +7,7 @@ public class Application {
         List<Employee> newEmployees = new ArrayList<>();
         CityDAO cityDAO = new CityDAOImpl();
         //Создаю новый город.
-        City city = new City(5, "BIRSK", newEmployees);
+        City city = new City("BIRSK", newEmployees);
         //Создаю сотрудника №1
         Employee employee1 = new Employee((long)21, "AYGUL", "ZAYDULLINA", "female", 29, city);
         //Создаю сотрудника №2
