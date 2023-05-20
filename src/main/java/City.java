@@ -56,4 +56,17 @@ public class City {
                 ", Название = " + city_name +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return city_id == city.city_id && Objects.equals(city_name, city.city_name) && Objects.equals(employees, city.employees);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city_id, city_name, employees);
+    }
 }
