@@ -37,7 +37,7 @@ public class City {
         return city_name;
     }
 
-    public void setCityName(String cityName) {
+    public void setCityName(String city_name) {
         this.city_name = city_name;
     }
 
