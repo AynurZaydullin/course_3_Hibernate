@@ -2,15 +2,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class EmployeeDAOImpl implements EmployeeDAO {
+public class CityDAOImpl implements CityDAO{
     @Override
-    public void add(Employee employee) {
+    public void add(City city) {
         // Создаем экземпляр EntityManager из EntityManagerFactory
         EntityManager entityManager = EntityConfig.createHibernateEntityManagerFactory().createEntityManager();
         // Начинаем транзакцию
         entityManager.getTransaction().begin();
         //Создание сущности
-        entityManager.persist(employee);
+        entityManager.persist(city);
         // Завершаем транзакцию
         entityManager.getTransaction().commit();
         entityManager.close();
@@ -18,48 +18,47 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public Employee getEmployeeById(long id) {
+    public City getById(int id) {
         EntityManager entityManager = EntityConfig.createHibernateEntityManagerFactory().createEntityManager();
         //Нахождение сущности
-        Employee employee =  entityManager.find(Employee.class, id);
+        City city =  entityManager.find(City.class, id);
         entityManager.close();
         EntityConfig.createHibernateEntityManagerFactory().close();
-        return employee;
+        return city;
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
-        EntityManager entityManager = EntityConfig.createHibernateEntityManagerFactory().createEntityManager();
+    public List<City> getAllCity() {        EntityManager entityManager = EntityConfig.createHibernateEntityManagerFactory().createEntityManager();
         // Создаю JPQL-запрос для выборки студентов
-        String jpqlQuery = "SELECT employee FROM Employee employee";
+        String jpqlQuery = "SELECT city FROM City city";
         // Создаею объект запроса с указанием типа возвращаемого результата
         // (Student.class)
-        TypedQuery<Employee> query = entityManager.createQuery(jpqlQuery, Employee.class);
+        TypedQuery<City> query = entityManager.createQuery(jpqlQuery, City.class);
         // Выполняею запрос и получаем результат в виде списка сотрудников
-        List<Employee> employees = query.getResultList();
+        List<City> cities = query.getResultList();
         entityManager.close();
         EntityConfig.createHibernateEntityManagerFactory().close();
-        return employees;
+        return cities;
     }
 
     @Override
-    public void updateEmployee(Employee employee) {
+    public void updateCity(City city) {
         EntityManager entityManager = EntityConfig.createHibernateEntityManagerFactory().createEntityManager();
         entityManager.getTransaction().begin();
         //Изменяю существующую сущность
-        entityManager.merge(employee);
+        entityManager.merge(city);
         entityManager.getTransaction().commit();
         entityManager.close();
         EntityConfig.createHibernateEntityManagerFactory().close();
     }
 
     @Override
-    public void deleteEmployee(long id) {
+    public void deleteCity(int id) {
         EntityManager entityManager = EntityConfig.createHibernateEntityManagerFactory().createEntityManager();
         entityManager.getTransaction().begin();
-        Employee employeeForRemoving = entityManager.find(Employee.class, id);
+        City cityForRemoving = entityManager.find(City.class, id);
         //Удаляю существующую сущность
-        entityManager.remove(employeeForRemoving);
+        entityManager.remove(cityForRemoving);
         entityManager.getTransaction().commit();
         entityManager.close();
         EntityConfig.createHibernateEntityManagerFactory().close();

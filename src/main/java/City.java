@@ -1,21 +1,26 @@
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "city")
 public class City {
     @Id
-    @Column(name = "city_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int city_id;
-    @Column(name = "city_name")
-    private String cityName;
+    private String city_name;
 
-    public City(int city_id, String cityName) {
-        this.city_id = city_id;
-        this.cityName = cityName;
+    //Связываю сущности город (city) и сотрудников (employees) связью: "OneToMany".
+    //Также включаю полную каскадность: "CascadeType.ALL". Это означает, что при создании нового города
+    // обновлении город, добавления сотрудников, сохранении, а также удалении города,
+    // то будет обнослен не только город, но и сотрудники.
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //FetchType.LAZY - можно не указывать. Этот тип стоит по умолчанию.
+    private List<Employee> employees;
+
+    public City( String city_name, List<Employee> employees) {
+        this.city_name = city_name;
+        this.employees = employees;
     }
 
     public City() {}
@@ -29,11 +34,27 @@ public class City {
     }
 
     public String getCityName() {
-        return cityName;
+        return city_name;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setCityName(String city_name) {
+        this.city_name = city_name;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    @Override
+    public String toString() {
+        return "Информация о городе: " +
+                "id=" + city_id +
+                ", Название = " + city_name +
+                '}';
     }
 
     @Override
@@ -41,19 +62,11 @@ public class City {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
-        return city_id == city.city_id && cityName.equals(city.cityName);
+        return city_id == city.city_id && Objects.equals(city_name, city.city_name) && Objects.equals(employees, city.employees);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(city_id, cityName);
-    }
-
-    @Override
-    public String toString() {
-        return "City{" +
-                "cityId=" + city_id +
-                ", cityName='" + cityName + '\'' +
-                '}';
+        return Objects.hash(city_id, city_name, employees);
     }
 }
